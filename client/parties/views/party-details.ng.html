@@ -1,0 +1,17 @@
+<section ng-controller="PartyDetailsCtrl as detail">
+    <p>ID: {{ detail.party._id }}</p>
+    <p>Name: {{ detail.party.name }}
+        <br/>
+        <input type="text" ng-model="detail.party.name">
+    </p>
+    <p>Description: {{ detail.party.description }}
+        <br/>
+        <input type="text" ng-model="detail.party.description">
+    </p>
+    <span>
+        <button ng-click="detail.reset()">Reset</button>
+    </span>
+    <span>
+        <button ng-click="detail.save()">Save</button>
+    </span>
+</section>
