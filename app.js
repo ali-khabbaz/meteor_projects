@@ -4,9 +4,11 @@
 	if (Meteor.isClient) {
 		angular.module('socially', ['angular-meteor', 'ui.router']);
 
+
 		var partiesListCtrl = function ($meteor) {
 			var vm = this;
 			vm.parties = $meteor.collection(Parties);
+			console.log('parties', vm.parties);
 			vm.add = add;
 			vm.remove = remove;
 
@@ -27,8 +29,39 @@
 			}
 		};
 
+		var PartyDetailsCtrl = function ($stateParams) {
+			var vm = this;
+			console.log('id', $stateParams.partyId);
+			vm.partyId = $stateParams.partyId;
+		};
+
 		angular.module('socially').controller('partiesListCtrl', partiesListCtrl);
 		partiesListCtrl.$inject = ['$meteor'];
+
+		angular.module('socially').controller('PartyDetailsCtrl', PartyDetailsCtrl);
+		PartyDetailsCtrl.$inject = ['$stateParams'];
+
+		angular.module('socially').config(['$urlRouterProvider', '$stateProvider', '$locationProvider',
+			function ($urlRouterProvider, $stateProvider, $locationProvider) {
+
+				$locationProvider.html5Mode(true);
+
+				$stateProvider
+					.state('parties', {
+						url: '/parties',
+						templateUrl: 'parties-list.ng.html',
+						controller: 'partiesListCtrl'
+					})
+					.state('partyDetails', {
+						url: '/parties/:partyId',
+						templateUrl: 'party-details.ng.html',
+						controller: 'PartyDetailsCtrl'
+					});
+
+				$urlRouterProvider.otherwise('/parties');
+			}
+		]);
+
 
 
 	}
