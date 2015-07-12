@@ -3,7 +3,7 @@ partiesListCtrl.$inject = ['$meteor', '$rootScope'];
 
 function partiesListCtrl($meteor, $rootScope) {
 	var vm = this;
-	vm.parties = $meteor.collection(Parties);
+	vm.parties = $meteor.collection(Parties).subscribe('parties');
 	console.log('parties', vm.parties);
 	vm.add = add;
 	vm.remove = remove;
@@ -18,7 +18,8 @@ function partiesListCtrl($meteor, $rootScope) {
 		vm.parties.push({
 			"name": vm.name,
 			"description": vm.description,
-			"owner": $rootScope.currentUser._id
+			"owner": $rootScope.currentUser._id,
+			"public": vm.public
 		});
 	}
 }

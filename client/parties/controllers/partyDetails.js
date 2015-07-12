@@ -18,6 +18,7 @@ function PartyDetailsCtrl($meteor, $stateParams) {
 		vm.party.reset();
 	}
 	vm.party_id = $stateParams.party_id;
-	vm.party = $meteor.object(Parties, $stateParams.party_id, false);
+	vm.party = $meteor.object(Parties, $stateParams.party_id, false).subscribe('parties');
+	vm.users = $meteor.collection(Meteor.users, false).subscribe('users');
 	console.log('>>>>>>', vm.party);
 }
