@@ -1,9 +1,15 @@
-<section ng-controller="partiesListCtrl">
+<section ng-controller="partiesListCtrl as party">
     <ul>
-        <li ng-repeat="part in parties">
+        <li ng-repeat="part in party.parties">
             <span>{{part.name}}</span>,
             <br/>
             <span>{{part.description}}</span>
         </li>
     </ul>
+    name:
+    <input type="text" ng-model="party.name">
+    <br/> description:
+    <input type="text" ng-model="party.description">
+    <br/><button ng-click="party.add()">Add</button>
+    <br/><button ng-click="party.remove()">Remove the first</button>
 </section>

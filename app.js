@@ -2,15 +2,33 @@
 	'use strict';
 	var Parties = new Mongo.Collection("parties");
 	if (Meteor.isClient) {
-		angular.module('socially', ['angular-meteor']);
+		angular.module('socially', ['angular-meteor', 'ui.router']);
 
-		var partiesListCtrl = function ($scope, $meteor) {
-			$scope.parties = $meteor.collection(Parties);
-			console.log('salam');
+		var partiesListCtrl = function ($meteor) {
+			var vm = this;
+			vm.parties = $meteor.collection(Parties);
+			vm.add = add;
+			vm.remove = remove;
+
+			function remove() {
+				vm.parties.splice(0, 1);
+				//vm.parties.remove(); remove all or remove an item
+			}
+
+			function add() {
+				vm.parties.push({
+					"name": vm.name,
+					"description": vm.description
+				});
+				/*vm.parties.save({
+					"name": vm.name,
+					"description": vm.description
+				});*/
+			}
 		};
 
 		angular.module('socially').controller('partiesListCtrl', partiesListCtrl);
-		partiesListCtrl.$inject = ['$scope', '$meteor'];
+		partiesListCtrl.$inject = ['$meteor'];
 
 
 	}
